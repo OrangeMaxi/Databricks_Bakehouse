@@ -1,0 +1,39 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC # sales_franchises Bronze DLT
+-- MAGIC
+-- MAGIC ## Overview
+-- MAGIC This notebook defines a Delta Live Table (DLT) pipeline for ingesting data into the bronze layer.
+-- MAGIC 
+-- MAGIC - **Source System**: Unity Catalog Volume
+-- MAGIC - **Source Path**: `/Volumes/dev_catalog/bronze/landing_zone/sales_franchises.parquet`
+-- MAGIC - **Target Catalog**: `dev_catalog`
+-- MAGIC - **Target Schema**: `bronze`
+-- MAGIC - **Target Table**: `sales_franchises`
+-- MAGIC - **Layer**: Bronze
+-- MAGIC 
+-- MAGIC ## Change Log
+-- MAGIC | Date       | Developer   | Description                          |
+-- MAGIC |------------|-------------|--------------------------------------|
+-- MAGIC | 2024-07-30 | Engineer    | Initial version for sales_franchises. |
+-- MAGIC 
+-- MAGIC ## Usage
+-- MAGIC This DLT pipeline can be run as part of a scheduled job to incrementally load data into the bronze table.
+-- MAGIC 
+-- MAGIC **Prerequisites:**
+-- MAGIC - Access to the Unity Catalog volume `/Volumes/dev_catalog/bronze/landing_zone/`
+-- MAGIC - Permissions to create and manage tables in `dev_catalog.bronze`
+-- MAGIC 
+-- MAGIC **Execution:**
+-- MAGIC This DLT is designed to be executed as part of a Delta Live Tables pipeline.
+-- MAGIC 
+-- MAGIC **Data Quality:**
+-- MAGIC Data quality checks can be added using DLT expectations (e.g., `CONSTRAINT valid_id EXPECT (id IS NOT NULL)`).
+-- MAGIC 
+-- MAGIC **Monitoring:**
+-- MAGIC Monitor pipeline health and data quality metrics through the DLT UI and Databricks monitoring tools.
+-- MAGIC 
+-- MAGIC ---
+
+CREATE OR REFRESH STREAMING TABLE dev_catalog.bronze.sales_franchises
+AS SELECT * FROM read_files("/Volumes/dev_catalog/bronze/landing_zone/sales_franchises.parquet", format => "parquet");
