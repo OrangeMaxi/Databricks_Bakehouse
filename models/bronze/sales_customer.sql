@@ -21,4 +21,4 @@ AS SELECT
   continent,
   current_timestamp() AS processing_timestamp
 FROM
-  read_files("/Volumes/dev_catalog/bronze/landing_zone");
+  read_files("/Volumes/dev_catalog/bronze/landing_zone/sales_customers.parquet");
